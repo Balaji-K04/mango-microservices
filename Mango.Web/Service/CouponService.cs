@@ -7,7 +7,6 @@ namespace Mango.Web.Service
     public class CouponService : ICouponSevice
     {
         private IBaseService _baseService;
-        private const string _couponEndpoint = "/api/coupon";
 
         public CouponService(IBaseService baseService)
         {
@@ -20,7 +19,7 @@ namespace Mango.Web.Service
             {
                 ApiType = StaticDetails.ApiType.POST,
                 Data = couponDto,
-                Url = StaticDetails.CouponAPIBase + _couponEndpoint
+                Url = StaticDetails.CouponAPIBase + "/api/coupon"
             });
         }
 
@@ -29,7 +28,7 @@ namespace Mango.Web.Service
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = StaticDetails.ApiType.DELETE,
-                Url = StaticDetails.CouponAPIBase + _couponEndpoint + "/" + id
+                Url = StaticDetails.CouponAPIBase + "/api/coupon/" + id
             });
         }
 
@@ -38,7 +37,7 @@ namespace Mango.Web.Service
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = StaticDetails.ApiType.GET,
-                Url = StaticDetails.CouponAPIBase + _couponEndpoint
+                Url = StaticDetails.CouponAPIBase + "/api/coupon"
             });
         }
 
@@ -47,7 +46,7 @@ namespace Mango.Web.Service
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = StaticDetails.ApiType.GET,
-                Url = StaticDetails.CouponAPIBase + _couponEndpoint+  "/GetByCode/" + couponCode
+                Url = StaticDetails.CouponAPIBase + "/api/coupon/GetByCode/" + couponCode
             });
         }
 
@@ -56,7 +55,7 @@ namespace Mango.Web.Service
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = StaticDetails.ApiType.GET,
-                Url = StaticDetails.CouponAPIBase + _couponEndpoint + "/" + id
+                Url = StaticDetails.CouponAPIBase + "/api/coupon/" + id
             });
         }
 
@@ -66,7 +65,7 @@ namespace Mango.Web.Service
             {
                 ApiType = StaticDetails.ApiType.PUT,
                 Data = couponDto,
-                Url = StaticDetails.CouponAPIBase + _couponEndpoint
+                Url = StaticDetails.CouponAPIBase + "/api/coupon"
             });
         }
     }
