@@ -26,15 +26,34 @@ namespace Mango.Services.AuthAPI.Service
             _jwtTokenGenerator = jwtTokenGenerator;
         }
 
+        public async Task<bool> AssignRole(string email, string roleName)
+        {
+            var user = _appContext.ApplicationUsers.FirstOrDefault(u => u.Email.ToLower() == email.ToLower());
+
+            if (user != null)
+            {
+                if (!_roleManager.RoleExistsAsync(roleName).GetAwaiter().GetResult())
+                {
+                    _roleManager.CreateAsync(new IdentityRole(roleName)).GetAwaiter().GetResult();
+                }
+
+                await _userManager.AddToRoleAsync(user, roleName);
+
+                return true;
+            }
+
+            return false;
+        }
+
         public async Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto)
         {
-            var user = _appContext.ApplicationUsers.FirstOrDefault( u => u.UserName.ToLower() == loginRequestDto.UserName.ToLower());
+            var user = _appContext.ApplicationUsers.FirstOrDefault(u => u.UserName.ToLower() == loginRequestDto.UserName.ToLower());
 
             bool isValid = await _userManager.CheckPasswordAsync(user, loginRequestDto.Password);
 
             if (user == null || isValid == false)
             {
-                return new LoginResponseDto() { User = null, Token = ""  }; 
+                return new LoginResponseDto() { User = null, Token = "" };
             }
 
             var token = _jwtTokenGenerator.GenerateToken(user);
@@ -47,8 +66,8 @@ namespace Mango.Services.AuthAPI.Service
                 PhoneNumber = user.PhoneNumber ?? ""
             };
 
-            LoginResponseDto loginResponseDto = new LoginResponseDto() 
-            { 
+            LoginResponseDto loginResponseDto = new LoginResponseDto()
+            {
                 User = userDto,
                 Token = token
             };
@@ -82,7 +101,7 @@ namespace Mango.Services.AuthAPI.Service
 
                     return "";
                 }
-                else 
+                else
                 {
                     return result.Errors.FirstOrDefault().Description;
                 }
