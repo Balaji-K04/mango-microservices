@@ -4,8 +4,8 @@
     {
         #region Base API
         public static string CouponAPIBase { get; set; } = string.Empty;
-        public static string ProductAPIBase { get; set; } = string.Empty;
         public static string AuthAPIBase { get; set; } = string.Empty;
+        public static string ProductAPIBase { get; set; } = string.Empty;
         public static string ShoppingCartAPIBase { get; set; } = string.Empty;
         public static string OrderAPIBase { get; set; } = string.Empty;
         #endregion Base API
